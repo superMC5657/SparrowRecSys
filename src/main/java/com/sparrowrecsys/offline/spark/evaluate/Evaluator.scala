@@ -5,9 +5,9 @@ import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
 import org.apache.spark.sql.DataFrame
 
 class Evaluator {
-  def evaluate(predictions:DataFrame):Unit = {
+  def evaluate(predictions: DataFrame): Unit = {
 
-    import  predictions.sparkSession.implicits._
+    import predictions.sparkSession.implicits._
 
     val scoreAndLabels = predictions.select("label", "probability").map { row =>
       (row.apply(1).asInstanceOf[DenseVector](1), row.getAs[Int]("label").toDouble)

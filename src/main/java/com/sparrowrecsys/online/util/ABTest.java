@@ -8,18 +8,18 @@ public class ABTest {
 
     final static String defaultModel = "emb";
 
-    public static String getConfigByUserId(String userId){
-        if (null == userId || userId.isEmpty()){
+    public static String getConfigByUserId(String userId) {
+        if (null == userId || userId.isEmpty()) {
             return defaultModel;
         }
 
-        if(userId.hashCode() % trafficSplitNumber == 0){
+        if (userId.hashCode() % trafficSplitNumber == 0) {
             System.out.println(userId + " is in bucketA.");
             return bucketAModel;
-        }else if(userId.hashCode() % trafficSplitNumber == 1){
+        } else if (userId.hashCode() % trafficSplitNumber == 1) {
             System.out.println(userId + " is in bucketB.");
             return bucketBModel;
-        }else{
+        } else {
             System.out.println(userId + " isn't in AB test.");
             return defaultModel;
         }

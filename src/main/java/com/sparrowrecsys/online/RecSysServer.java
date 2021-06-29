@@ -7,6 +7,7 @@ import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.resource.Resource;
+
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URL;
@@ -17,19 +18,20 @@ import java.net.URL;
 
 public class RecSysServer {
 
+    //recsys server port number
+    private static final int DEFAULT_PORT = 6010;
+
     public static void main(String[] args) throws Exception {
         new RecSysServer().run();
     }
 
-    //recsys server port number
-    private static final int DEFAULT_PORT = 6010;
-
-    public void run() throws Exception{
+    public void run() throws Exception {
 
         int port = DEFAULT_PORT;
         try {
             port = Integer.parseInt(System.getenv("PORT"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) {
+        }
 
         //set ip and port number
         InetSocketAddress inetAddress = new InetSocketAddress("0.0.0.0", port);
@@ -37,18 +39,17 @@ public class RecSysServer {
 
         //get index.html path
         URL webRootLocation = this.getClass().getResource("/webroot/index.html");
-        if (webRootLocation == null)
-        {
+        if (webRootLocation == null) {
             throw new IllegalStateException("Unable to determine webroot URL location");
         }
 
         //set index.html as the root page
-        URI webRootUri = URI.create(webRootLocation.toURI().toASCIIString().replaceFirst("/index.html$","/"));
+        URI webRootUri = URI.create(webRootLocation.toURI().toASCIIString().replaceFirst("/index.html$", "/"));
         System.out.printf("Web Root URI: %s%n", webRootUri.getPath());
 
         //load all the data to DataManager
         DataManager.getInstance().loadData(webRootUri.getPath() + "sampledata/movies.csv",
-                webRootUri.getPath() + "sampledata/links.csv",webRootUri.getPath() + "sampledata/ratings.csv",
+                webRootUri.getPath() + "sampledata/links.csv", webRootUri.getPath() + "sampledata/ratings.csv",
                 webRootUri.getPath() + "modeldata/item2vecEmb.csv",
                 webRootUri.getPath() + "modeldata/userEmb.csv",
                 "i2vEmb", "uEmb");
@@ -57,11 +58,11 @@ public class RecSysServer {
         ServletContextHandler context = new ServletContextHandler();
         context.setContextPath("/");
         context.setBaseResource(Resource.newResource(webRootUri));
-        context.setWelcomeFiles(new String[] { "index.html" });
-        context.getMimeTypes().addMimeMapping("txt","text/plain;charset=utf-8");
+        context.setWelcomeFiles(new String[]{"index.html"});
+        context.getMimeTypes().addMimeMapping("txt", "text/plain;charset=utf-8");
 
         //bind services with different servlets
-        context.addServlet(DefaultServlet.class,"/");
+        context.addServlet(DefaultServlet.class, "/");
         context.addServlet(new ServletHolder(new MovieService()), "/getmovie");
         context.addServlet(new ServletHolder(new UserService()), "/getuser");
         context.addServlet(new ServletHolder(new SimilarMovieService()), "/getsimilarmovie");

@@ -1,4 +1,5 @@
 package com.sparrowrecsys.online.service;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparrowrecsys.online.datamanager.DataManager;
 import com.sparrowrecsys.online.datamanager.User;
@@ -13,6 +14,7 @@ import java.io.IOException;
  */
 
 public class UserService extends HttpServlet {
+    @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException {
         try {
@@ -32,7 +34,7 @@ public class UserService extends HttpServlet {
                 ObjectMapper mapper = new ObjectMapper();
                 String jsonUser = mapper.writeValueAsString(user);
                 response.getWriter().println(jsonUser);
-            }else{
+            } else {
                 response.getWriter().println("");
             }
 

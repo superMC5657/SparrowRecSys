@@ -13,6 +13,7 @@ import java.util.Map;
  * Movie Class, contains attributes loaded from movielens movies.csv and other advanced data like averageRating, emb, etc.
  */
 public class Movie {
+    final int TOP_RATING_SIZE = 10;
     int movieId;
     String title;
     int releaseYear;
@@ -23,20 +24,14 @@ public class Movie {
     int ratingNumber;
     //average rating score
     double averageRating;
-
     //embedding of the movie
     @JsonIgnore
     Embedding emb;
-
     //all rating scores list
     @JsonIgnore
     List<Rating> ratings;
-
     @JsonIgnore
     Map<String, String> movieFeatures;
-
-    final int TOP_RATING_SIZE = 10;
-
     @JsonSerialize(using = RatingListSerializer.class)
     List<Rating> topRatings;
 
@@ -78,12 +73,12 @@ public class Movie {
         return genres;
     }
 
-    public void addGenre(String genre){
-        this.genres.add(genre);
-    }
-
     public void setGenres(List<String> genres) {
         this.genres = genres;
+    }
+
+    public void addGenre(String genre) {
+        this.genres.add(genre);
     }
 
     public List<Rating> getRatings() {
@@ -91,22 +86,22 @@ public class Movie {
     }
 
     public void addRating(Rating rating) {
-        averageRating = (averageRating * ratingNumber + rating.getScore()) / (ratingNumber+1);
+        averageRating = (averageRating * ratingNumber + rating.getScore()) / (ratingNumber + 1);
         ratingNumber++;
         this.ratings.add(rating);
         addTopRating(rating);
     }
 
-    public void addTopRating(Rating rating){
-        if (this.topRatings.isEmpty()){
+    public void addTopRating(Rating rating) {
+        if (this.topRatings.isEmpty()) {
             this.topRatings.add(rating);
-        }else{
+        } else {
             int index = 0;
-            for (Rating topRating : this.topRatings){
-                if (topRating.getScore() >= rating.getScore()){
+            for (Rating topRating : this.topRatings) {
+                if (topRating.getScore() >= rating.getScore()) {
                     break;
                 }
-                index ++;
+                index++;
             }
             topRatings.add(index, rating);
             if (topRatings.size() > TOP_RATING_SIZE) {

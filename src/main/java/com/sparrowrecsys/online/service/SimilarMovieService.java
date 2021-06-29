@@ -14,6 +14,7 @@ import java.util.List;
  * SimilarMovieService, recommend similar movies given by a specific movie
  */
 public class SimilarMovieService extends HttpServlet {
+    @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException {
         try {

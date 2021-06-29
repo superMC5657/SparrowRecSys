@@ -10,14 +10,14 @@ import org.apache.flink.streaming.api.windowing.time.Time;
 
 import java.net.URL;
 
-class Rating{
+class Rating {
     public String userId;
     public String movieId;
     public String rating;
     public String timestamp;
     public String latestMovieId;
 
-    public Rating(String line){
+    public Rating(String line) {
         String[] lines = line.split(",");
         this.userId = lines[0];
         this.movieId = lines[1];
@@ -27,7 +27,14 @@ class Rating{
     }
 }
 
+/**
+ * @author supermc
+ */
 public class RealTimeFeature {
+
+    public static void main(String[] args) throws Exception {
+        new RealTimeFeature().test();
+    }
 
     public void test() throws Exception {
         // set up the execution environment
@@ -52,9 +59,9 @@ public class RealTimeFeature {
                 .timeWindow(Time.seconds(1))
                 .reduce(
                         (ReduceFunction<Rating>) (rating, t1) -> {
-                            if (rating.timestamp.compareTo(t1.timestamp) > 0){
+                            if (rating.timestamp.compareTo(t1.timestamp) > 0) {
                                 return rating;
-                            }else{
+                            } else {
                                 return t1;
                             }
                         }
@@ -65,9 +72,5 @@ public class RealTimeFeature {
             }
         });
         env.execute();
-    }
-
-    public static void main(String[] args) throws Exception {
-        new RealTimeFeature().test();
     }
 }

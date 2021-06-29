@@ -14,6 +14,7 @@ import java.io.IOException;
  */
 
 public class MovieService extends HttpServlet {
+    @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws IOException {
         try {
@@ -33,7 +34,7 @@ public class MovieService extends HttpServlet {
                 ObjectMapper mapper = new ObjectMapper();
                 String jsonMovie = mapper.writeValueAsString(movie);
                 response.getWriter().println(jsonMovie);
-            }else {
+            } else {
                 response.getWriter().println("");
             }
 

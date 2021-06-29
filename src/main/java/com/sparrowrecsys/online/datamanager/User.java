@@ -28,7 +28,7 @@ public class User {
     @JsonIgnore
     Map<String, String> userFeatures;
 
-    public User(){
+    public User() {
         this.ratings = new ArrayList<>();
         this.emb = null;
         this.userFeatures = null;
@@ -53,11 +53,11 @@ public class User {
     public void addRating(Rating rating) {
         this.ratings.add(rating);
         this.averageRating = (this.averageRating * ratingCount + rating.getScore()) / (ratingCount + 1);
-        if (rating.getScore() > highestRating){
+        if (rating.getScore() > highestRating) {
             highestRating = rating.getScore();
         }
 
-        if (rating.getScore() < lowestRating){
+        if (rating.getScore() < lowestRating) {
             lowestRating = rating.getScore();
         }
 

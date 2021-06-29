@@ -16,6 +16,7 @@ import java.util.List;
  */
 
 public class RecommendationService extends HttpServlet {
+    @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException,
             IOException {
@@ -32,7 +33,7 @@ public class RecommendationService extends HttpServlet {
             //ranking algorithm
             String sortby = request.getParameter("sortby");
             //a simple method, just fetch all the movie in the genre
-            List<Movie> movies = DataManager.getInstance().getMoviesByGenre(genre, Integer.parseInt(size),sortby);
+            List<Movie> movies = DataManager.getInstance().getMoviesByGenre(genre, Integer.parseInt(size), sortby);
 
             //convert movie list to json format and return
             ObjectMapper mapper = new ObjectMapper();

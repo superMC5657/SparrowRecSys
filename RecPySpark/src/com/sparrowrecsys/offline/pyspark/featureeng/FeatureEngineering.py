@@ -1,6 +1,6 @@
 from pyspark import SparkConf
 from pyspark.ml import Pipeline
-from pyspark.ml.feature import OneHotEncoderEstimator, StringIndexer, QuantileDiscretizer, MinMaxScaler
+from pyspark.ml.feature import OneHotEncoder, StringIndexer, QuantileDiscretizer, MinMaxScaler
 from pyspark.ml.linalg import VectorUDT, Vectors
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
@@ -10,7 +10,7 @@ from pyspark.sql import functions as F
 
 def oneHotEncoderExample(movieSamples):
     samplesWithIdNumber = movieSamples.withColumn("movieIdNumber", F.col("movieId").cast(IntegerType()))
-    encoder = OneHotEncoderEstimator(inputCols=["movieIdNumber"], outputCols=['movieIdVector'], dropLast=False)
+    encoder = OneHotEncoder(inputCols=["movieIdNumber"], outputCols=['movieIdVector'], dropLast=False)
     oneHotEncoderSamples = encoder.fit(samplesWithIdNumber).transform(samplesWithIdNumber)
     oneHotEncoderSamples.printSchema()
     oneHotEncoderSamples.show(10)
@@ -28,7 +28,8 @@ def multiHotEncoderExample(movieSamples):
     genreIndexer = StringIndexer(inputCol="genre", outputCol="genreIndex")
     StringIndexerModel = genreIndexer.fit(samplesWithGenre)
     genreIndexSamples = StringIndexerModel.transform(samplesWithGenre).withColumn("genreIndexInt",
-                                                                                  F.col("genreIndex").cast(IntegerType()))
+                                                                                  F.col("genreIndex").cast(
+                                                                                      IntegerType()))
     indexSize = genreIndexSamples.agg(max(F.col("genreIndexInt"))).head()[0] + 1
     processedSamples = genreIndexSamples.groupBy('movieId').agg(
         F.collect_list('genreIndexInt').alias('genreIndexes')).withColumn("indexSize", F.lit(indexSize))

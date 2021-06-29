@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html class="no-js" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
     <!--<base href="/">-->
     <base href="."/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
     <title>Home | Sparrow RecSys</title>
-    <meta name="description" content=""/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="theme-color" content="#ffffff"/>
-    <link type="text/plain" rel="author"/>
+    <meta content="" name="description"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="#ffffff" name="theme-color"/>
+    <link rel="author" type="text/plain"/>
     <link href="./css/style.css" rel="stylesheet"/>
-    <link rel="shortcut icon" href="./resources/favicon.ico">
+    <link href="./resources/favicon.ico" rel="shortcut icon">
     <script src="./js/jquery-3.2.1.min.js"></script>
     <script src="./js/recsys.js?v=1.25"></script>
     <style>
-        .movie-row .movie-row-bounds .movie-row-item{
+        .movie-row .movie-row-bounds .movie-row-item {
             display: block;
         }
 
-        .movie-card-md1{
-            margin:0 5px 15px 0
+        .movie-card-md1 {
+            margin: 0 5px 15px 0
         }
     </style>
 </head>
@@ -37,11 +37,11 @@
                 <form class="form-inline ng-pristine ng-valid ng-touched" novalidate="" role="form">
                     <div class="input-group input-group-sm base-header-search-box">
                <span class="twitter-typeahead" style="position: relative; display: inline-block;">
-                   <input class="form-control input-sm no-glow tt-input ng-pristine ng-valid ng-touched"
-                          id="omnisearch-typeahead" name="currentVal" type="text" spellcheck="false" dir="auto"
-                          aria-owns="omnisearch-typeahead_listbox" role="combobox"
-                          aria-readonly="true" aria-autocomplete="list"
-                          style="position: relative; vertical-align: top; background-color: transparent;"/>
+                   <input aria-autocomplete="list"
+                          aria-owns="omnisearch-typeahead_listbox" aria-readonly="true" class="form-control input-sm no-glow tt-input ng-pristine ng-valid ng-touched" dir="auto" id="omnisearch-typeahead"
+                          name="currentVal" role="combobox"
+                          spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent;"
+                          type="text"/>
                 </span>
                         <span class="input-group-btn">
                             <button class="btn btn-default btn-sm no-glow">
@@ -119,22 +119,22 @@
 
 <script type="text/javascript">
 
-function getQueryString(name, windowLocation) {
-    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-    var r = windowLocation.search.substr(1).match(reg);
-    if (r != null) {
-        return unescape(r[2]);
-    }
-    return null;
-};
+    function getQueryString(name, windowLocation) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = windowLocation.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    };
 
-var windowLocation = window.location;
-var movieId = getQueryString("movieId",windowLocation);
+    var windowLocation = window.location;
+    var movieId = getQueryString("movieId", windowLocation);
 
-var baseUrl = windowLocation.protocol + "//" + windowLocation.host + "/"
+    var baseUrl = windowLocation.protocol + "//" + windowLocation.host + "/"
 
-addMovieDetails("movie-details-container", movieId, baseUrl);
-addRelatedMovies("#recPage", "relatedMovies", movieId, baseUrl);
+    addMovieDetails("movie-details-container", movieId, baseUrl);
+    addRelatedMovies("#recPage", "relatedMovies", movieId, baseUrl);
 
 </script>
 </html>

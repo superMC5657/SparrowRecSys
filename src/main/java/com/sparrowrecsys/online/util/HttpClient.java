@@ -18,8 +18,8 @@ import java.util.Map;
 import java.util.concurrent.Future;
 
 public class HttpClient {
-    public static String asyncSinglePostRequest(String host, String body){
-        if (null == body || body.isEmpty()){
+    public static String asyncSinglePostRequest(String host, String body) {
+        if (null == body || body.isEmpty()) {
             return null;
         }
 
@@ -33,14 +33,14 @@ public class HttpClient {
             final HttpResponse response = future.get();
             client.close();
             return getRespondContent(response);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }
     }
 
     public static Map<String, String> asyncMapPostRequest(String host, Map<String, String> bodyMap) throws Exception {
-        if (null == bodyMap || bodyMap.isEmpty()){
+        if (null == bodyMap || bodyMap.isEmpty()) {
             return null;
         }
 
@@ -65,13 +65,13 @@ public class HttpClient {
 
             client.close();
             return responds;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static String getRespondContent(HttpResponse response) throws Exception{
+    public static String getRespondContent(HttpResponse response) throws Exception {
         HttpEntity entity = response.getEntity();
         InputStream is = entity.getContent();
         BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8), 8);
@@ -82,7 +82,7 @@ public class HttpClient {
         return sb.toString();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
 
         //keys must be equal to:
@@ -108,8 +108,8 @@ public class HttpClient {
         // userReleaseYearStddev"
         //}
         JSONObject instance = new JSONObject();
-        instance.put("userId",10351);
-        instance.put("movieId",52);
+        instance.put("userId", 10351);
+        instance.put("movieId", 52);
 
         /*
         instance.put("timestamp",1254725234);
@@ -144,8 +144,8 @@ public class HttpClient {
 
 
         JSONObject instance2 = new JSONObject();
-        instance2.put("userId",10351);
-        instance2.put("movieId",53);
+        instance2.put("userId", 10351);
+        instance2.put("movieId", 53);
 
         JSONArray instances = new JSONArray();
         instances.put(instance);
@@ -155,7 +155,6 @@ public class HttpClient {
         instancesRoot.put("instances", instances);
 
         System.out.println(instancesRoot.toString());
-
 
 
         System.out.println(asyncSinglePostRequest("http://localhost:8501/v1/models/recmodel:predict", instancesRoot.toString()));

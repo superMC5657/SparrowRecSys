@@ -1,9 +1,9 @@
 package com.sparrowrecsys.online.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparrowrecsys.online.datamanager.Movie;
 import com.sparrowrecsys.online.recprocess.RecForYouProcess;
 import com.sparrowrecsys.online.util.ABTest;
-import com.sparrowrecsys.online.datamanager.Movie;
 import com.sparrowrecsys.online.util.Config;
 
 import javax.servlet.ServletException;
@@ -18,6 +18,7 @@ import java.util.List;
  */
 
 public class RecForYouService extends HttpServlet {
+    @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException,
             IOException {
@@ -34,7 +35,7 @@ public class RecForYouService extends HttpServlet {
             //ranking algorithm
             String model = request.getParameter("model");
 
-            if (Config.IS_ENABLE_AB_TEST){
+            if (Config.IS_ENABLE_AB_TEST) {
                 model = ABTest.getConfigByUserId(userId);
             }
 

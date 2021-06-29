@@ -1,7 +1,7 @@
 package com.sparrowrecsys.offline.spark.model
 
 import org.apache.spark.SparkConf
-import org.apache.spark.ml.evaluation.{BinaryClassificationEvaluator, RegressionEvaluator}
+import org.apache.spark.ml.evaluation.RegressionEvaluator
 import org.apache.spark.ml.recommendation.ALS
 import org.apache.spark.ml.tuning.{CrossValidator, ParamGridBuilder}
 import org.apache.spark.sql.SparkSession
@@ -17,8 +17,8 @@ object CollaborativeFiltering {
 
     val spark = SparkSession.builder.config(conf).getOrCreate()
     val ratingResourcesPath = this.getClass.getResource("/webroot/sampledata/ratings.csv")
-    val toInt = udf[Int, String]( _.toInt)
-    val toFloat = udf[Double, String]( _.toFloat)
+    val toInt = udf[Int, String](_.toInt)
+    val toFloat = udf[Double, String](_.toFloat)
     val ratingSamples = spark.read.format("csv").option("header", "true").load(ratingResourcesPath.getPath)
       .withColumn("userIdInt", toInt(col("userId")))
       .withColumn("movieIdInt", toInt(col("movieId")))
@@ -76,7 +76,7 @@ object CollaborativeFiltering {
       .setEstimator(als)
       .setEvaluator(evaluator)
       .setEstimatorParamMaps(paramGrid)
-      .setNumFolds(10)  // Use 3+ in practice
+      .setNumFolds(10) // Use 3+ in practice
     val cvModel = cv.fit(test)
     val avgMetrics = cvModel.avgMetrics
 
