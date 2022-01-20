@@ -9,6 +9,7 @@ import org.apache.flink.streaming.api.functions.source.FileProcessingMode;
 import org.apache.flink.streaming.api.windowing.time.Time;
 
 import java.net.URL;
+import java.util.Objects;
 
 class Rating {
     public String userId;
@@ -41,11 +42,11 @@ public class RealTimeFeature {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment
                 .getExecutionEnvironment();
 
-        URL ratingResourcesPath = this.getClass().getResource("/webroot/sampledata/ratings.csv");
+        URL ratingResourcesPath = this.getClass().getResource("/webroot/sampleData/ratings.csv");
 
         // monitor directory, checking for new files
         TextInputFormat format = new TextInputFormat(
-                new org.apache.flink.core.fs.Path(ratingResourcesPath.getPath()));
+                new org.apache.flink.core.fs.Path(Objects.requireNonNull(ratingResourcesPath).getPath()));
 
         DataStream<String> inputStream = env.readFile(
                 format,
@@ -66,11 +67,11 @@ public class RealTimeFeature {
                             }
                         }
                 ).addSink(new SinkFunction<Rating>() {
-            @Override
-            public void invoke(Rating value, Context context) {
-                System.out.println("userId:" + value.userId + "\tlatestMovieId:" + value.latestMovieId);
-            }
-        });
+                    @Override
+                    public void invoke(Rating value, Context context) {
+                        System.out.println("userId:" + value.userId + "\tlatestMovieId:" + value.latestMovieId);
+                    }
+                });
         env.execute();
     }
 }

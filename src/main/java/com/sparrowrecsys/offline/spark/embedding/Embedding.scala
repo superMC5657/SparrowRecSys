@@ -26,7 +26,7 @@ object Embedding {
   def generateUserEmb(sparkSession: SparkSession, rawSampleDataPath: String, word2VecModel: Word2VecModel, embLength: Int, embOutputFilename: String, saveToRedis: Boolean, redisKeyPrefix: String): Unit = {
     val ratingsResourcesPath = this.getClass.getResource(rawSampleDataPath)
     val ratingSamples = sparkSession.read.format("csv").option("header", "true").load(ratingsResourcesPath.getPath)
-    ratingSamples.show(10, false)
+    ratingSamples.show(10, truncate = false)
 
     val userEmbeddings = new ArrayBuffer[(String, Array[Float])]()
 
@@ -190,7 +190,7 @@ object Embedding {
 
     val spark = SparkSession.builder.config(conf).getOrCreate()
 
-    val rawSampleDataPath = "/webroot/sampledata/ratings.csv"
+    val rawSampleDataPath = "/webroot/sampleData/ratings.csv"
     val embLength = 10
 
     val samples = processItemSequence(spark, rawSampleDataPath)
