@@ -222,7 +222,7 @@ object Embedding {
       .withColumn("movieIdStr", array_join(col("movieIds"), " "))
 
     userSeq.select("userId", "movieIdStr").show(10, truncate = false)
-    userSeq.select("movieIdStr").rdd.map(r => r.getAs[String]("movieIdStr").split(" ").toSeq)
+    userSeq.select("movieIdStr").rdd.map(r => r.getAs[String]("movieIdStr").split(" ").toIndexedSeq)
   }
 
   def trainItem2vec(sparkSession: SparkSession, samples: RDD[Seq[String]], embLength: Int, embOutputFilename: String, saveToRedis: Boolean, redisKeyPrefix: String): Word2VecModel = {
