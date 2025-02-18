@@ -16,7 +16,7 @@ object CollaborativeFiltering {
       .set("spark.submit.deployMode", "client")
 
     val spark = SparkSession.builder.config(conf).getOrCreate()
-    val ratingResourcesPath = this.getClass.getResource("/webroot/sampleData/ratings.csv")
+    val ratingResourcesPath = this.getClass.getResource("/webroot/sampledata/ratings.csv")
     val toInt = udf[Int, String](_.toInt)
     val toFloat = udf[Double, String](_.toFloat)
     val ratingSamples = spark.read.format("csv").option("header", "true").load(ratingResourcesPath.getPath)

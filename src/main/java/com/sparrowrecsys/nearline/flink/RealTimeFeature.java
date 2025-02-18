@@ -42,7 +42,7 @@ public class RealTimeFeature {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment
                 .getExecutionEnvironment();
 
-        URL ratingResourcesPath = this.getClass().getResource("/webroot/sampleData/ratings.csv");
+        URL ratingResourcesPath = this.getClass().getResource("/webroot/sampledata/ratings.csv");
 
         // monitor directory, checking for new files
         TextInputFormat format = new TextInputFormat(

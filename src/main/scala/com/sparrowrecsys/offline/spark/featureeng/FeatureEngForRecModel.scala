@@ -153,10 +153,10 @@ object FeatureEngForRecModel {
       .set("spark.submit.deployMode", "client")
 
     val spark = SparkSession.builder.config(conf).getOrCreate()
-    val movieResourcesPath = this.getClass.getResource("/webroot/sampleData/movies.csv")
+    val movieResourcesPath = this.getClass.getResource("/webroot/sampledata/movies.csv")
     val movieSamples = spark.read.format("csv").option("header", "true").load(movieResourcesPath.getPath)
 
-    val ratingsResourcesPath = this.getClass.getResource("/webroot/sampleData/ratings.csv")
+    val ratingsResourcesPath = this.getClass.getResource("/webroot/sampledata/ratings.csv")
     val ratingSamples = spark.read.format("csv").option("header", "true").load(ratingsResourcesPath.getPath)
 
     val ratingSamplesWithLabel = addSampleLabel(ratingSamples)
@@ -167,7 +167,7 @@ object FeatureEngForRecModel {
 
 
     //save samples as csv format
-    splitAndSaveTrainingTestSamples(samplesWithUserFeatures, "/webroot/sampleData")
+    splitAndSaveTrainingTestSamples(samplesWithUserFeatures, "/webroot/sampledata")
 
     //save user features and item features to redis for online inference
     //extractAndSaveUserFeaturesToRedis(samplesWithUserFeatures)

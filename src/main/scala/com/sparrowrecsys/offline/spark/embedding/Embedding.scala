@@ -190,7 +190,7 @@ object Embedding {
 
     val spark = SparkSession.builder.config(conf).getOrCreate()
 
-    val rawSampleDataPath = "/webroot/sampleData/ratings.csv"
+    val rawSampleDataPath = "/webroot/sampledata/ratings.csv"
     val embLength = 10
 
     val samples = processItemSequence(spark, rawSampleDataPath)
